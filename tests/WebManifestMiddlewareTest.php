@@ -36,7 +36,7 @@ use Psr\Http\Message\ResponseInterface;
  * @package CodeInc\WebManifestMiddleware\Tests
  * @author  Joan Fabrégat <joan@codeinc.fr>
  */
-class WebManifestMiddlewareTest extends TestCase
+final class WebManifestMiddlewareTest extends TestCase
 {
     /**
      * @throws \CodeInc\WebManifestMiddleware\Exceptions\WebManifestParamValueException

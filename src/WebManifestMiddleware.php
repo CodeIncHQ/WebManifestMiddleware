@@ -52,6 +52,8 @@ use Psr\Http\Server\RequestHandlerInterface;
  */
 class WebManifestMiddleware implements MiddlewareInterface
 {
+    public const DEFAULT_URI_PATH = '/manifest.webmanifest';
+
     /**
      * @var string
      */
@@ -67,9 +69,9 @@ class WebManifestMiddleware implements MiddlewareInterface
      *
      * @param string $uriPath
      */
-    public function __construct(string $uriPath = '/manifest.webmanifest')
+    public function __construct(?string $uriPath = null)
     {
-        $this->uriPath = $uriPath;
+        $this->uriPath = $uriPath ?? self::DEFAULT_URI_PATH;
     }
 
     /**
