@@ -23,6 +23,7 @@ declare(strict_types=1);
 namespace CodeInc\WebManifestMiddleware;
 use CodeInc\WebManifestMiddleware\Assets\WebManifestResponse;
 use CodeInc\WebManifestMiddleware\Exceptions\WebManifestParamValueException;
+use CodeInc\WebManifestMiddleware\Tests\WebManifestMiddlewareTest;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -35,13 +36,24 @@ use Psr\Http\Server\RequestHandlerInterface;
  * Comment are extracted from the official Mozilla web manifest documentation available here:
  * https://developer.mozilla.org/docs/Web/Manifest
  *
+ * The web app manifest provides information about an application (such as name, author, icon, and description) in a
+ * JSON text file. The purpose of the manifest is to install web applications to the homescreen of a device, providing
+ * users with quicker access and a richer experience.
+ *
+ * Web app manifests are part of a collection of web technologies called progressive web apps, which are web
+ * applications that can be installed to the homescreen of a device without needing the user to go through an app
+ * store, along with other capabilities such as  being available offline and receiving push notifications.
+ *
+ * @see     WebManifestMiddlewareTest
  * @package CodeInc\WebManifestMiddleware
- * @author Joan Fabrégat <joan@codeinc.fr>
+ * @author  Joan Fabrégat <joan@codeinc.fr>
  * @license MIT <https://github.com/CodeIncHQ/WebManifestMiddleware/blob/master/LICENSE>
- * @link https://github.com/CodeIncHQ/WebManifestMiddleware
+ * @link    https://github.com/CodeIncHQ/WebManifestMiddleware
  */
 class WebManifestMiddleware implements MiddlewareInterface
 {
+    public const DEFAULT_URI_PATH = '/manifest.webmanifest';
+
     /**
      * @var string
      */
@@ -57,9 +69,9 @@ class WebManifestMiddleware implements MiddlewareInterface
      *
      * @param string $uriPath
      */
-    public function __construct(string $uriPath = '/manifest.webmanifest')
+    public function __construct(?string $uriPath = null)
     {
-        $this->uriPath = $uriPath;
+        $this->uriPath = $uriPath ?? self::DEFAULT_URI_PATH;
     }
 
     /**
@@ -339,5 +351,15 @@ class WebManifestMiddleware implements MiddlewareInterface
     public function isWebManifestRequest(ServerRequestInterface $request):bool
     {
         return $request->getUri()->getPath() == $this->uriPath;
+    }
+
+    /**
+     * Retunrs the HTML meta tag to the manifest.
+     *
+     * @return string
+     */
+    public function getHtmlMetaTag():string
+    {
+        return '<link rel="manifest" href="'.htmlspecialchars($this->uriPath).'">';
     }
 }
