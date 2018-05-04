@@ -32,6 +32,7 @@ use Psr\Http\Message\ResponseInterface;
 /**
  * Class WebManifestMiddlewareTest
  *
+ * @uses WebManifestMiddleware
  * @package CodeInc\WebManifestMiddleware\Tests
  * @author  Joan Fabrégat <joan@codeinc.fr>
  */
@@ -51,8 +52,10 @@ class WebManifestMiddlewareTest extends TestCase
         $middleware->addIcon('/a/fake/icon.png', '48x48');
         $webManifest = $middleware->getWebManifest();
 
+        $request = FakeServerRequest::getSecureServerRequestWithPath('/manifest.webmanifest');
+        self::assertTrue($middleware->isWebManifestRequest($request));
         $response = $middleware->process(
-            FakeServerRequest::getSecureServerRequestWithPath('/manifest.webmanifest'),
+            $request,
             new FakeRequestHandler()
         );
 
@@ -72,8 +75,10 @@ class WebManifestMiddlewareTest extends TestCase
     {
         $middleware = new WebManifestMiddleware('/manifest.webmanifest');
 
+        $request = FakeServerRequest::getSecureServerRequestWithPath('/a-page.html');
+        self::assertFalse($middleware->isWebManifestRequest($request));
         $response = $middleware->process(
-            FakeServerRequest::getSecureServerRequestWithPath('/a-page.html'),
+            $request,
             new FakeRequestHandler()
         );
 
