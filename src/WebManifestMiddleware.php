@@ -340,4 +340,14 @@ class WebManifestMiddleware implements MiddlewareInterface
     {
         return $request->getUri()->getPath() == $this->uriPath;
     }
+
+    /**
+     * Retunrs the HTML meta tag to the manifest.
+     *
+     * @return string
+     */
+    public function getHtmlMetaTag():string
+    {
+        return '<link rel="manifest" href="'.htmlspecialchars($this->uriPath).'">';
+    }
 }

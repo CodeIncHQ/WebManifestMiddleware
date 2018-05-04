@@ -81,6 +81,12 @@ class WebManifestMiddlewareTest extends TestCase
         self::assertNotInstanceOf(WebManifestResponse::class, $response);
     }
 
+    public function testHtmlMetaTag():void
+    {
+        $middleware = new WebManifestMiddleware('/manifest.webmanifest');
+        self::assertEquals($middleware->getHtmlMetaTag(), '<link rel="manifest" href="/manifest.webmanifest">');
+    }
+
     /**
      * @expectedException \CodeInc\WebManifestMiddleware\Exceptions\WebManifestParamValueException
      */
