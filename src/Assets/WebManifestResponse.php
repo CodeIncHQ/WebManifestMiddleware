@@ -32,8 +32,6 @@ use CodeInc\Psr7Responses\JsonResponse;
  */
 class WebManifestResponse extends JsonResponse
 {
-    public const DEFAULT_CHARSET = "utf-8";
-
     /**
      * WebManifestResponse constructor.
      *
@@ -50,8 +48,8 @@ class WebManifestResponse extends JsonResponse
         $headers['Content-Type'] = 'application/manifest+json; charset='.($charset ?? self::DEFAULT_CHARSET);
         parent::__construct(
             json_encode($webManifest, JSON_PRETTY_PRINT),
-            $charset,
             $status,
+            $charset,
             $headers,
             $version,
             $reason
