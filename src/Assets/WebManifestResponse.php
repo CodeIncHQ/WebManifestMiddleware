@@ -35,24 +35,23 @@ class WebManifestResponse extends JsonResponse
     /**
      * WebManifestResponse constructor.
      *
-     * @param array       $webManifest
-     * @param null|string $charset
-     * @param int         $status
-     * @param array       $headers
-     * @param string      $version
-     * @param null|string $reason
+     * @param array $webManifest
+     * @param int $code
+     * @param string $reasonPhrase
+     * @param string $charset
+     * @param array $headers
+     * @param string $version
      */
-    public function __construct(array $webManifest, ?string $charset = null, int $status = 200, array $headers = [],
-        string $version = '1.1', ?string $reason = null)
+    public function __construct(array $webManifest, int $code = 200, string $reasonPhrase = '',
+        string $charset = 'utf-8', array $headers = [], string $version = '1.1')
     {
-        $headers['Content-Type'] = 'application/manifest+json; charset='.($charset ?? self::DEFAULT_CHARSET);
         parent::__construct(
             json_encode($webManifest, JSON_PRETTY_PRINT),
-            $status,
+            $code,
+            $reasonPhrase,
             $charset,
-            $headers,
-            $version,
-            $reason
+            $headers + ['Content-Type' => sprintf('application/manifest+json; charset=%s', $charset)],
+            $version
         );
     }
 }
