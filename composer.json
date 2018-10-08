@@ -1,16 +1,17 @@
 {
   "name": "codeinc/web-manifest-middleware",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A PSR-15 middleware to generate web manifests",
   "homepage": "https://github.com/CodeIncHQ/WebManifestMiddleware",
   "type": "library",
   "license": "MIT",
   "require": {
     "php": ">=7.1",
+    "ext-json": "*",
     "psr/http-message": "^1.0",
     "psr/http-server-middleware": "^1.0",
     "psr/http-server-handler": "^1.0",
-    "codeinc/psr7-responses": "^1.2"
+    "codeinc/psr7-responses": "^2"
   },
   "require-dev": {
     "phpunit/phpunit": "^7",
