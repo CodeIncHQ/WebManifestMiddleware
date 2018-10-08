@@ -32,25 +32,27 @@ use CodeInc\Psr7Responses\JsonResponse;
  */
 class WebManifestResponse extends JsonResponse
 {
+    public const DEFAULT_HEADERS = [
+        'application/manifest+json; charset=utf-8'
+    ];
+
     /**
      * WebManifestResponse constructor.
      *
      * @param array $webManifest
      * @param int $code
      * @param string $reasonPhrase
-     * @param string $charset
      * @param array $headers
      * @param string $version
      */
     public function __construct(array $webManifest, int $code = 200, string $reasonPhrase = '',
-        string $charset = 'utf-8', array $headers = [], string $version = '1.1')
+        array $headers = self::DEFAULT_HEADERS, string $version = '1.1')
     {
         parent::__construct(
             json_encode($webManifest, JSON_PRETTY_PRINT),
             $code,
             $reasonPhrase,
-            $charset,
-            $headers + ['Content-Type' => sprintf('application/manifest+json; charset=%s', $charset)],
+            $headers,
             $version
         );
     }
